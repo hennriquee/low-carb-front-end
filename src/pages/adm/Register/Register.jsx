@@ -138,7 +138,6 @@ const Register = () => {
   // Commit com toast.promise
   async function commitProduct(e) {
     e.preventDefault();
-    console.log(zeroglutenRef.current.value);
     toast.promise(
       handleSubmit(), // retorna a Promise do handleSubmit
       {
@@ -175,8 +174,8 @@ const Register = () => {
               </option>
               <option value="Bolo">Bolo</option>
               <option value="Doce">Doce</option>
+              <option value="Trigo">Pão</option>
               <option value="Salgado">Salgado</option>
-              <option value="Trigo">Trigo</option>
             </select>
 
             <input
