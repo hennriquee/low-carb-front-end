@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { api } from "../../../services/api";
 import "./edit.css";
-import { Link, replace } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Toaster, toast } from "react-hot-toast";
-import "../../../Components/ProductCard/product-card.css";
+import "../../../components/ProductCard/product-card.css";
 
 const Edit = () => {
   const searchRef = useRef();
