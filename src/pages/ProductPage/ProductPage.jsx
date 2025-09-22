@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-regular-svg-icons";
-import ReturnBtn from "../../Components/ReturnBtn/ReturnBtn";
+import ReturnBtn from "../../components/ReturnBtn/ReturnBtn";
 
 const ProductPage = () => {
   const { id } = useParams();
