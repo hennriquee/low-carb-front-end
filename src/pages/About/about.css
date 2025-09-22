@@ -1,0 +1,151 @@
+.about {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-image: linear-gradient(to bottom, #00000027, #fff);
+  align-items: center;
+  justify-content: center;
+  padding: 0 7rem;
+}
+
+.about h1 {
+  font-size: 3rem;
+  font-weight: 400;
+}
+
+.about__img {
+  width: 25%;
+}
+
+.about__img img {
+  width: 100%;
+  inset: 0;
+  object-fit: cover;
+  /* border-right: 5px solid #d4ab39;
+  border-bottom: 5px solid #d4ab39; */
+  background-image: linear-gradient(
+    to top left,
+    /* direção da diagonal */ var(--terc-color) 50%,
+    /* amarelo transparente até 50% */ transparent 50%
+      /* amarelo sólido depois disso */
+  );
+  /* border-image: linear-gradient(135deg, transparent 40%, #d4ab39) 1; */
+  /* background-color: #d4ab39ce;
+  border-radius: 20px; */
+}
+
+.about-content span {
+  color: var(--main-color);
+}
+
+.about__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.about__content p {
+  text-indent: 50px;
+  line-height: 1.9rem;
+  letter-spacing: 0.05rem;
+  text-align: justify;
+  border-right: 5px solid;
+  border-bottom: 5px solid;
+  border-image: linear-gradient(160deg, transparent 40%, var(--main-color)) 1;
+  padding-right: 0.5rem;
+}
+
+.about__container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.about h1 {
+  text-shadow: 0 0 2px var(--main-color);
+  color: var(--second-color);
+}
+
+/* RESPONSIVE */
+
+@media (min-width: 0px) {
+  .about {
+    padding: 1rem 3rem;
+    padding-top: 4rem;
+    & h1 {
+      font-size: 2.5rem;
+    }
+  }
+
+  .about__content {
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .about__content p {
+    line-height: 1.5rem;
+  }
+
+  .about__img {
+    width: 35%;
+  }
+
+  .about__container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    height: 100%;
+  }
+}
+
+@media (min-width: 576px) {
+  .about {
+    padding: 1rem 7rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .about__container {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  .about__content {
+    width: 60%;
+  }
+
+  .about__img {
+    width: 30%;
+  }
+
+  .about {
+    padding: 0 3rem;
+    & h1 {
+      h1 {
+        font-size: 3rem;
+      }
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .about {
+    padding: 7rem;
+  }
+
+  .about__img {
+    width: 25%;
+  }
+
+  .about__content {
+    width: 55%;
+  }
+
+  .about__content p {
+    line-height: 1.9rem;
+  }
+}
+/* /RESPONSIVE */
