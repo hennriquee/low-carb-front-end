@@ -127,10 +127,11 @@ const Register = () => {
       formRef.current.reset();
       priceRef.current.value = "";
       setSelectedFiles([]);
-      window.location.reload();
+      // window.location.reload();
     } catch (err) {
-      console.error("Erro ao cadastrar imóvel:", err);
+      console.error("Erro ao cadastrar produto:", err);
       // relança para o toast.promise capturar
+
       throw err;
     }
   };
