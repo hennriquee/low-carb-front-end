@@ -13,11 +13,13 @@ import EditProductPage from "./pages/adm/EditProductPage/EditProductPage";
 import Register from "./pages/adm/Register/Register";
 import PrivateRoute from "./components/PrivateRoute";
 import Login from "./pages/Login/Login";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <BrowserRouter>
       <Header />
+      <ScrollToTop />
 
       <Routes>
         <Route path="/" element={<Home />} />
