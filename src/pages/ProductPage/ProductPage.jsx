@@ -101,16 +101,19 @@ const ProductPage = () => {
       <div className="product__content__container">
         <h1 className="product__title">
           {product?.title}{" "}
-          {product?.category === "Doce"
-            ? "🧁"
-            : product?.category === "Salgado"
-            ? "🥟"
-            : product?.category === "Trigo"
-            ? "🌾"
-            : product?.category === "Bolo"
+          {product?.category === "Bolos & Tortas"
             ? "🍰"
+            : product?.category === "Biscoitos & Cookies"
+            ? "🍪"
+            : product?.category === "Sobremesas & Doces"
+            ? "🧁"
+            : product?.category === "Salgados & Lanches"
+            ? "🥟"
+            : product?.category === "Pães & Roscas"
+            ? "🥯"
             : ""}
         </h1>
+        <p className="product__content__category">◉ {product?.category}</p>
         <p className="product__content__text">{product?.text}</p>
         <p className="product__content__price">{product?.price}</p>
         {product && (

@@ -173,10 +173,11 @@ const Register = () => {
               <option value="" disabled>
                 Categoria
               </option>
-              <option value="Bolo">Bolo</option>
-              <option value="Doce">Doce</option>
-              <option value="Trigo">Pão ou Rosca</option>
-              <option value="Salgado">Salgado</option>
+              <option value="Bolos & Tortas">Bolos & Tortas</option>
+              <option value="Biscoitos & Cookies">Biscoitos & Cookies</option>
+              <option value="Sobremesas & Doces">Sobremesas & Doces</option>
+              <option value="Pães & Roscas">Pães & Roscas</option>
+              <option value="Salgados & Lanches">Salgados & Lanches</option>
             </select>
 
             <input

@@ -63,6 +63,12 @@
   height: 100%;
 }
 
+.product__content__category {
+  color: #6b6b6b;
+  font-size: 0.9rem;
+  cursor: default;
+}
+
 .product__content__text {
   margin-top: 1rem;
   letter-spacing: 0.02rem;
@@ -199,6 +205,12 @@
     height: 100%;
   }
 
+  .product__content__category {
+    position: absolute;
+    bottom: 0;
+    left: 0.5rem;
+  }
+
   .product__content__text {
     min-width: 100%;
     height: 100%;
@@ -238,6 +250,12 @@
     gap: 3rem;
     align-items: start;
     max-height: 100vh;
+  }
+
+  .product__content__category {
+    position: static;
+    bottom: auto;
+    left: auto;
   }
 
   .tiny__img {

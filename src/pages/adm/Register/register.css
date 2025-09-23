@@ -1,7 +1,11 @@
 .register__page {
   padding: 0 10rem;
   padding-top: 3rem;
-  background-image: linear-gradient(to bottom, #000, transparent);
+  background-image: linear-gradient(
+    to top,
+    var(--terc-color),
+    var(--main-color)
+  );
   background-size: cover;
   background-position: center;
   display: flex;

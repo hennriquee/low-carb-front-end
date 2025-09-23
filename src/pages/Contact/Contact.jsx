@@ -11,13 +11,13 @@ const Contact = () => {
           <Link
             target="_blank"
             className="contact__box email-contact__box"
-            to="mailto:lowcarbedelicias@gmail.com?subject=Interesse%20em%20Im%C3%B3vel&body=Ol%C3%A1%2C%20tenho%20interesse%20nos%20servi%C3%A7os%20da%20Coimbra%20Im%C3%B3veis%2C%20poderia%20entrar%20em%20contato%20comigo%3F"
+            to="mailto:lowcarbedelicias@gmail.com?subject=Interesse%20em%20Im%C3%B3vel&body=Ol%C3%A1%2C%20tenho%20interesse%20nos%20seus%20produtos"
           >
             <div className="contact__box-title">
               <i className="bx bx-envelope"></i>
               <span>E-mail</span>
             </div>
-            <p>lowcarbedelicias@gmail.com</p>
+            <p>lulowcarbedelicias@gmail.com</p>
           </Link>
           <div className="contact__line__boxes">
             <Link
@@ -33,7 +33,7 @@ const Contact = () => {
             </Link>
             <Link
               target="_blank"
-              to="https://wa.me/5534998820464?text=Olá,+tenho+interesse+nos+produtos+da+Low+Carb+&+Delícias!"
+              to="https://wa.me/5534998820464?text=Olá,+tenho+interesse+nos+produtos+da+Low+Carb+e+Delícias!"
               className="contact__box wpp-contact__box"
             >
               <div className="contact__box-title">

@@ -137,7 +137,8 @@ header {
 
 @media (min-width: 768px) {
   header {
-    padding: 0.2rem 3rem;
+    padding: 0.2rem 2rem;
+    padding-left: 1rem;
   }
 
   .nav {
@@ -150,4 +151,7 @@ header {
 }
 
 @media (min-width: 992px) {
+  header {
+    padding-left: 2rem;
+  }
 }

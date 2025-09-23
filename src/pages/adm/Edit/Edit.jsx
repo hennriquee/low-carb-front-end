@@ -82,9 +82,7 @@ const Edit = () => {
             </div>
 
             <div className="product__card__content">
-              <h5 className="product__card__title">
-                {selectedProduct.category}
-              </h5>
+              <h5 className="product__card__title">{selectedProduct.title}</h5>
               <div className="product__card__zeros">
                 <p
                   className={
@@ -140,7 +138,7 @@ const Edit = () => {
                 </div>
 
                 <div className="product__card__content">
-                  <h5 className="product__card__title">{product.category}</h5>
+                  <h5 className="product__card__title">{product.title}</h5>
                   <div className="product__card__zeros">
                     <p
                       className={
