@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
-  const emailRef = useRef();
+  const userRef = useRef();
   const passwordRef = useRef();
   const formRef = useRef();
 
@@ -24,7 +24,7 @@ const Login = () => {
 
     try {
       const res = await api.post("/login", {
-        email: emailRef.current.value,
+        user: userRef.current.value,
         password: passwordRef.current.value,
       });
 
@@ -32,7 +32,7 @@ const Login = () => {
 
       sessionStorage.setItem("admLogged", token);
 
-      emailRef.current.value = "";
+      userRef.current.value = "";
       passwordRef.current.value = "";
 
       navigate("/adm/cadastro");
@@ -47,10 +47,10 @@ const Login = () => {
         <h1>Olá, administrador!</h1>
 
         <p className="login__text">
-          Entre com seu email e senha de administrador.
+          Entre com seu usuário e senha de administrador.
         </p>
         <form ref={formRef} onSubmit={handleLogin} className="login__form">
-          <input required ref={emailRef} type="email" placeholder="E-mail" />
+          <input required ref={userRef} type="text" placeholder="Usuário" />
           <div className="password__input">
             <input
               required

@@ -160,7 +160,7 @@ button {
 
 .cad__btn {
   cursor: pointer;
-  background-color: rgb(0, 99, 247);
+  background-color: var(--second-color);
 
   width: 100%;
   display: flex;
@@ -183,6 +183,43 @@ textarea {
   border-radius: 8px;
   border: 1px solid #acacac;
 }
+
+/* CHECKBOX CHATGPT */
+
+.register__checkbox input[type="checkbox"] {
+  appearance: none; /* remove estilo padrão do navegador */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #666;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+}
+
+.register__checkbox input[type="checkbox"]:focus,
+.register__checkbox input[type="checkbox"]:active {
+  outline: none; /* tira o brilho/escurecimento */
+  box-shadow: none;
+}
+
+/* quando marcado */
+.register__checkbox input[type="checkbox"]:checked {
+  background-color: #22c55e; /* verde */
+  border-color: #22c55e;
+}
+
+.register__checkbox input[type="checkbox"]:checked::after {
+  content: "✔";
+  color: white;
+  font-size: 12px;
+  position: absolute;
+  left: 2px;
+  top: -1px;
+}
+
+/* CHECKBOX CHATGPT */
 
 /* RESPONSIVE */
 

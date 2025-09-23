@@ -175,7 +175,7 @@ const Register = () => {
               </option>
               <option value="Bolo">Bolo</option>
               <option value="Doce">Doce</option>
-              <option value="Trigo">Pão</option>
+              <option value="Trigo">Pão ou Rosca</option>
               <option value="Salgado">Salgado</option>
             </select>
 
