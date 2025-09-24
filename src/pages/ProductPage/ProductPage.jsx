@@ -120,7 +120,7 @@ const ProductPage = () => {
           <div className="product__page__btns">
             <Link
               className="product__page__btn wpp__btn"
-              to={`https://wa.me/5534991821068?text=Olá,+tenho+interesse+neste+imóvel:%0A${url}`}
+              to={`https://wa.me/5534998820464?text=Olá,+tenho+interesse+neste+produto:%0A${url}`}
               target="_blank"
             >
               <i className="bx bxl-whatsapp"></i>
@@ -131,7 +131,7 @@ const ProductPage = () => {
 
             <Link
               className="product__page__btn email__btn"
-              to={`mailto:coimbraimoveisuberlandia@gmail.com?subject=Interesse%20em%20imóvel&body=Olá,%20tenho%20interesse%20neste%20imóvel:%0A${url}`}
+              to={`mailto:coimbraimoveisuberlandia@gmail.com?subject=Interesse%20em%20produto&body=Olá,%20tenho%20interesse%20neste%20produto:%0A${url}`}
             >
               <i className="bx bx-envelope"></i>E-mail
             </Link>
