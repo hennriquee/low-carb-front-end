@@ -15,15 +15,15 @@
   width: 35rem;
   height: 373px;
   overflow: hidden;
+  display: flex;
+  box-shadow: 0 0 10px #0000003f;
+  border-radius: 12px;
   & img {
     object-position: center;
     height: 100%;
     width: 100%;
     inset: 0;
     object-fit: cover;
-    display: block;
-    border-radius: 16px;
-    box-shadow: 0 0 10px #00000031;
   }
 }
 
@@ -132,17 +132,6 @@
 .wpp__btn {
   border: 2px solid #29b742;
   background-color: #2ecc4a;
-}
-
-.destaque__img {
-  width: 575px;
-  height: 380px;
-  overflow: hidden;
-  border-radius: 10px;
-  display: flex;
-  align-items: bottom;
-  margin-bottom: 0.5rem;
-  box-shadow: 0 0 10px #0000003f;
 }
 
 .product__page__id {
