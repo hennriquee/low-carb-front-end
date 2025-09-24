@@ -22,7 +22,7 @@ const Catalog = () => {
 
   return (
     <section className="catalog__main">
-      <h1>Catálogo</h1>
+      <h1>Cardápio</h1>
       {loading ? (
         <p className="loading__message">Carregando produtos...</p> // mensagem enquanto busca
       ) : products.length > 0 ? (
