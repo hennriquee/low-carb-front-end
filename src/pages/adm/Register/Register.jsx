@@ -15,15 +15,10 @@ const Register = () => {
 
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [priceDisabled, setPriceDisabled] = useState(true);
-
-  // PRICE FORMAT
   const [price, setPrice] = useState("");
 
   const handlePriceChange = (e) => {
-    // remove tudo que não é número
     const numericValue = e.target.value.replace(/\D/g, "");
-
-    // converte para reais (duas casas decimais)
     const formattedValue = (Number(numericValue) / 100).toLocaleString(
       "pt-BR",
       {
@@ -31,17 +26,13 @@ const Register = () => {
         currency: "BRL",
       }
     );
-
     setPrice(formattedValue);
   };
-  // PRICE FORMAT
 
-  // Upload de imagem no Cloudinary
   const handleUploadToCloudinary = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "unsigned_products"); // preset deve existir no Cloudinary
-
+    formData.append("upload_preset", "unsigned_products");
     try {
       const res = await fetch(
         "https://api.cloudinary.com/v1_1/dabzzfviw/image/upload",
@@ -51,16 +42,13 @@ const Register = () => {
         }
       );
       const data = await res.json();
-
       if (data.secure_url) {
-        //  adiciona parâmetros de otimização direto na URL
         const optimizedUrl = data.secure_url.replace(
           "/upload/",
           "/upload/f_auto,q_auto,w_1200/"
         );
         return optimizedUrl;
       }
-
       return null;
     } catch (err) {
       console.error("Erro no upload:", err);
@@ -68,21 +56,13 @@ const Register = () => {
     }
   };
 
-  // Seleção de arquivos
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
-    if (files.length === 0) return;
-
-    const newFile = files[0];
-    setSelectedFiles((prev) => {
-      if (prev.length < 4) {
-        return [...prev, newFile];
-      } else {
-        const updated = [...prev];
-        updated[updated.length - 1] = newFile;
-        return updated;
-      }
-    });
+    if (selectedFiles.length + files.length > 4) {
+      toast.error("Máximo de 4 imagens!");
+      return;
+    }
+    setSelectedFiles((prev) => [...prev, ...files]);
   };
 
   const handleRemove = (index) => {
@@ -91,16 +71,12 @@ const Register = () => {
 
   const handleSubmit = async () => {
     try {
-      // 1) Faz upload das imagens para Cloudinary
       let urls = [];
       if (selectedFiles.length > 0) {
         urls = await Promise.all(
           selectedFiles.map((file) => handleUploadToCloudinary(file))
         );
       }
-
-      // Envia os dados para o backend
-
       const payload = {
         category: categoryRef.current.value,
         title: titleRef.current.value,
@@ -110,8 +86,6 @@ const Register = () => {
         zerosugar: zerosugarRef.current.checked,
         images: urls,
       };
-
-      // Só adiciona price se tiver valor
       if (
         priceRef.current &&
         priceRef.current.value &&
@@ -122,31 +96,22 @@ const Register = () => {
         payload.price = "R$ -";
       }
       await api.post("/produtos/cadastro", payload);
-
-      // 3) Reset do formulário
       formRef.current.reset();
       priceRef.current.value = "";
       setSelectedFiles([]);
-      // window.location.reload();
     } catch (err) {
       console.error("Erro ao cadastrar produto:", err);
-      // relança para o toast.promise capturar
-
       throw err;
     }
   };
 
-  // Commit com toast.promise
   async function commitProduct(e) {
     e.preventDefault();
-    toast.promise(
-      handleSubmit(), // retorna a Promise do handleSubmit
-      {
-        loading: "Cadastrando...",
-        success: <p>Cadastro realizado!</p>,
-        error: <p>Erro ao cadastrar produto.</p>,
-      }
-    );
+    toast.promise(handleSubmit(), {
+      loading: "Cadastrando...",
+      success: <p>Cadastro realizado!</p>,
+      error: <p>Erro ao cadastrar produto.</p>,
+    });
   }
 
   const togglePriceInput = () => {
@@ -179,7 +144,6 @@ const Register = () => {
               <option value="Pães & Roscas">Pães & Roscas</option>
               <option value="Salgados & Lanches">Salgados & Lanches</option>
             </select>
-
             <input
               maxLength={19}
               required
@@ -199,7 +163,6 @@ const Register = () => {
               <input id="zerosugar" type="checkbox" ref={zerosugarRef} />
               <label htmlFor="zerosugar">Zero Açúcar</label>
             </div>
-
             <textarea
               maxLength={500}
               ref={textRef}
@@ -226,7 +189,6 @@ const Register = () => {
               Cadastrar
             </button>
           </div>
-          {/* Upload de imagens */}
           <div className="form__container-2">
             {selectedFiles.length > 0 && (
               <div className="preview__container">
@@ -252,6 +214,7 @@ const Register = () => {
               className="input__images"
               type="file"
               accept="image/*"
+              multiple
               onChange={handleFileChange}
             />
           </div>

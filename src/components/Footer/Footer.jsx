@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./footer.css";
 import {
   lowCarbInstagramLink,
@@ -9,8 +9,16 @@ import {
 } from "../../assets/links";
 
 const Footer = () => {
+  const { pathname } = useLocation();
   return (
-    <footer>
+    <footer
+      style={{
+        display:
+          pathname.includes("/adm") || pathname.includes("/login")
+            ? "none"
+            : "flex",
+      }}
+    >
       <div className="footer-container">
         <div className="footer-title">
           <h3>

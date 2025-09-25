@@ -70,7 +70,10 @@
 }
 
 .product__content__text {
-  margin-top: 1rem;
+  border: 1px solid #e4e4e4;
+  padding: 0.5rem;
+
+  background: #fcfcfc;
   letter-spacing: 0.02rem;
   word-spacing: 0.15rem;
   line-height: 1.7rem;
@@ -78,13 +81,14 @@
   min-height: 12rem;
   font-size: 1rem;
   color: var(--terc-color);
+  scrollbar-width: thin;
 }
 
 .product__content__price {
   text-align: center;
   font-size: 2rem;
   font-weight: 500;
-  margin-top: 0.5rem;
+
   color: var(--terc-color);
 }
 
@@ -207,6 +211,10 @@
     hyphens: auto;
     overflow-wrap: break-word;
     margin-top: -1.4rem;
+  }
+
+  .product__content__container {
+    width: 100%;
   }
 
   .tiny__img {

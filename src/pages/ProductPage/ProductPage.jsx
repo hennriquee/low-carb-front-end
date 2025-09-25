@@ -113,8 +113,15 @@ const ProductPage = () => {
             ? "🥯"
             : ""}
         </h1>
-        <p className="product__content__category">◉ {product?.category}</p>
-        <p className="product__content__text">{product?.text}</p>
+        <p className="product__content__category">
+          {product ? `◉ ${product?.category}` : ""}
+        </p>
+        <textarea
+          defaultValue={product?.text}
+          rows={8}
+          disabled
+          className="product__content__text"
+        ></textarea>
         <p className="product__content__price">{product?.price}</p>
         {product && (
           <div className="product__page__btns">

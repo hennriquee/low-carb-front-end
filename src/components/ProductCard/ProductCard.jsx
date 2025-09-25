@@ -1,6 +1,6 @@
 import React from "react";
 import "./product-card.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../../pages/Catalog/catalog.css";
 
 const ProductCard = ({
@@ -13,10 +13,15 @@ const ProductCard = ({
   zerosugar,
   images,
 }) => {
+  const navigate = useNavigate();
   return (
     <div className="product__card">
       <div className="product__card__img">
-        <img src={images[0]} alt="sem imagem" />
+        <img
+          onClick={() => navigate(`/catalogo/produto/${id}`)}
+          src={images[0]}
+          alt="sem imagem"
+        />
       </div>
 
       <div className="product__card__content">

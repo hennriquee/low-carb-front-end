@@ -4,13 +4,9 @@ import LogoImg from "../../assets/images/logo-white.png";
 import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
-  const { pathname } = useLocation();
+  const isLoggedIn = sessionStorage.getItem("admLogged");
 
-  useEffect(() => {
-    if (!pathname.includes("/adm")) {
-      sessionStorage.removeItem("admLogged");
-    }
-  }, [pathname]);
+  const { pathname } = useLocation();
 
   const menuHamburguer = useRef();
   const responsiveNav = useRef();
@@ -53,7 +49,7 @@ const Header = () => {
 
   return (
     <header>
-      <Link className="logo" to="/login">
+      <Link className="logo" to={isLoggedIn ? "/adm/cadastro" : "/login"}>
         <img draggable="false" src={LogoImg} alt="logo" />
       </Link>
 
