@@ -168,6 +168,7 @@ button {
   border: transparent;
   color: #fff;
   height: 1.8rem;
+  margin-left: 0;
 
   & :hover {
     opacity: 0.9;
@@ -269,6 +270,10 @@ textarea {
     padding-bottom: 2rem;
   }
 
+  .add__price__btn {
+    margin-bottom: 1rem;
+  }
+
   .register__form {
     flex-direction: column;
     position: relative;
@@ -317,6 +322,10 @@ textarea {
   .register__form {
     flex-direction: row;
     position: static;
+  }
+
+  .add__price__btn {
+    margin-bottom: 0;
   }
 
   .cad__btn {
