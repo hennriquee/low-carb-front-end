@@ -17,7 +17,7 @@ const Home = () => {
 
         <div className="home__btns">
           <Link to={"/catalogo"} className="home__btn catalog__btn">
-            Catálogo
+            Cardápio
           </Link>
           <Link to={"/contato"} className="home__btn contact__btn">
             Contato

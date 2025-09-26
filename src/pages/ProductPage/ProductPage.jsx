@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./product-page.css";
 import { api } from "../../services/api";
 import { Link, useParams } from "react-router-dom";
@@ -13,6 +13,21 @@ const ProductPage = () => {
   const [imageIdx, setImageIdx] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
   const url = window.location.href;
+  const textRef = useRef();
+  const priceRef = useRef();
+
+  const [temMais, setTemMais] = useState(false);
+  const [expandido, setExpandido] = useState(false);
+
+  const handleReadMore = () => {
+    setTemMais((prev) => !prev);
+    setExpandido((prev) => {
+      const novoValor = !prev;
+      textRef.current.style.overflow = novoValor ? "auto" : "hidden";
+      return novoValor;
+    });
+    priceRef.current.style.marginTop = "48px";
+  };
 
   const getProduct = async () => {
     setProduct((await api.get(`/produtos/${id}`)).data);
@@ -21,6 +36,13 @@ const ProductPage = () => {
   useEffect(() => {
     getProduct();
   }, []);
+
+  useEffect(() => {
+    if (textRef.current) {
+      // Verifica se o conteúdo do texto passa do tamanho visível
+      setTemMais(textRef.current.scrollHeight > textRef.current.clientHeight);
+    }
+  }, [product]);
 
   const changeImage = (idx) => {
     if (!product?.images) return;
@@ -116,13 +138,18 @@ const ProductPage = () => {
         <p className="product__content__category">
           {product ? `◉ ${product?.category}` : ""}
         </p>
-        <textarea
-          defaultValue={product?.text}
-          rows={8}
-          disabled
-          className="product__content__text"
-        ></textarea>
-        <p className="product__content__price">{product?.price}</p>
+        <div ref={textRef} className="product__content__text">
+          {product?.text}
+        </div>
+        {temMais && (
+          <p onClick={handleReadMore} className="read__more">
+            ...Ler mais
+          </p>
+        )}
+
+        <p ref={priceRef} className="product__content__price">
+          {product?.price}
+        </p>
         {product && (
           <div className="product__page__btns">
             <Link

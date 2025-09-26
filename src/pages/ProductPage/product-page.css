@@ -70,10 +70,9 @@
 }
 
 .product__content__text {
-  border: 1px solid #e4e4e4;
+  border: 0;
   padding: 0.5rem;
-
-  background: #fcfcfc;
+  background: inherit;
   letter-spacing: 0.02rem;
   word-spacing: 0.15rem;
   line-height: 1.7rem;
@@ -82,6 +81,21 @@
   font-size: 1rem;
   color: var(--terc-color);
   scrollbar-width: thin;
+  overflow: hidden;
+  max-height: 10rem;
+  white-space: pre-line;
+}
+
+.read__more {
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem;
+  padding-bottom: 0;
+
+  min-height: 3rem;
+  color: var(--second-color);
+  margin: auto;
+  width: 100%;
 }
 
 .product__content__price {
@@ -143,7 +157,7 @@
   bottom: 0;
   font-size: 0.8rem;
   right: 0.7rem;
-  color: rgba(85, 48, 48, 0.904);
+  color: #6b6b6b;
   cursor: pointer;
 }
 
