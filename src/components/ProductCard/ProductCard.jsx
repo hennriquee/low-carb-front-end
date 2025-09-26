@@ -40,7 +40,15 @@ const ProductCard = ({
           </p>
         </div>
         <hr />
-        <p className="price">{price}</p>
+        <p className="price">
+          A partir de{" "}
+          <span className="price__number">
+            {Math.min(...price.map((p) => p.value)).toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}
+          </span>
+        </p>
 
         <Link
           to={`/catalogo/produto/${id}`}

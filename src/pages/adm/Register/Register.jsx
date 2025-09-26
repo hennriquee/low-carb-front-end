@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import "./register.css";
 import { api } from "../../../services/api";
 import toast, { Toaster } from "react-hot-toast";
@@ -11,24 +11,33 @@ const Register = () => {
   const zeroglutenRef = useRef();
   const zerosugarRef = useRef();
   const formRef = useRef();
-  const priceRef = useRef();
 
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [priceDisabled, setPriceDisabled] = useState(true);
-  const [price, setPrice] = useState("");
+  const [prices, setPrices] = useState([{ size: "", value: "" }]);
 
-  const handlePriceChange = (e) => {
-    const numericValue = e.target.value.replace(/\D/g, "");
-    const formattedValue = (Number(numericValue) / 100).toLocaleString(
-      "pt-BR",
-      {
-        style: "currency",
-        currency: "BRL",
-      }
+  // Manipulação de preços
+  const handlePriceChange = (index, field, value) => {
+    setPrices((prev) =>
+      prev.map((p, i) =>
+        i === index
+          ? {
+              ...p,
+              [field]:
+                field === "value"
+                  ? Number(value.replace(/\D/g, "")) / 100
+                  : value,
+            }
+          : p
+      )
     );
-    setPrice(formattedValue);
   };
 
+  const addPrice = () =>
+    setPrices((prev) => [...prev, { size: "", value: "" }]);
+  const removePrice = (index) =>
+    setPrices((prev) => prev.filter((_, i) => i !== index));
+
+  // Upload de imagens
   const handleUploadToCloudinary = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
@@ -36,18 +45,14 @@ const Register = () => {
     try {
       const res = await fetch(
         "https://api.cloudinary.com/v1_1/dabzzfviw/image/upload",
-        {
-          method: "POST",
-          body: formData,
-        }
+        { method: "POST", body: formData }
       );
       const data = await res.json();
       if (data.secure_url) {
-        const optimizedUrl = data.secure_url.replace(
+        return data.secure_url.replace(
           "/upload/",
           "/upload/f_auto,q_auto,w_1200/"
         );
-        return optimizedUrl;
       }
       return null;
     } catch (err) {
@@ -65,10 +70,11 @@ const Register = () => {
     setSelectedFiles((prev) => [...prev, ...files]);
   };
 
-  const handleRemove = (index) => {
+  const handleRemoveFile = (index) => {
     setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
+  // Submit do formulário
   const handleSubmit = async () => {
     try {
       let urls = [];
@@ -77,6 +83,7 @@ const Register = () => {
           selectedFiles.map((file) => handleUploadToCloudinary(file))
         );
       }
+
       const payload = {
         category: categoryRef.current.value,
         title: titleRef.current.value,
@@ -85,23 +92,16 @@ const Register = () => {
         zerogluten: zeroglutenRef.current.checked,
         zerosugar: zerosugarRef.current.checked,
         images: urls,
+        price: prices,
       };
-      if (
-        priceRef.current &&
-        priceRef.current.value &&
-        priceRef.current.value !== "R$ 0,00"
-      ) {
-        payload.price = priceRef.current.value;
-      } else {
-        payload.price = "R$ -";
-      }
+
       await api.post("/produtos/cadastro", payload);
+
       formRef.current.reset();
-      priceRef.current.value = "";
       setSelectedFiles([]);
+      setPrices([{ size: "", value: "" }]);
     } catch (err) {
       console.error("Erro ao cadastrar produto:", err);
-      throw err;
     }
   };
 
@@ -114,14 +114,6 @@ const Register = () => {
     });
   }
 
-  const togglePriceInput = () => {
-    setPriceDisabled((prev) => !prev);
-  };
-
-  useEffect(() => {
-    priceRef.current.value = "";
-  }, [priceDisabled]);
-
   return (
     <section className="register__page">
       <Toaster />
@@ -129,12 +121,7 @@ const Register = () => {
         <h1>Cadastro de Produtos</h1>
         <form ref={formRef} className="register__form" onSubmit={commitProduct}>
           <div className="form__container-1">
-            <select
-              required
-              ref={categoryRef}
-              className="category__select"
-              defaultValue=""
-            >
+            <select required ref={categoryRef} defaultValue="">
               <option value="" disabled>
                 Categoria
               </option>
@@ -144,6 +131,7 @@ const Register = () => {
               <option value="Pães & Roscas">Pães & Roscas</option>
               <option value="Salgados & Lanches">Salgados & Lanches</option>
             </select>
+
             <input
               maxLength={19}
               required
@@ -151,6 +139,7 @@ const Register = () => {
               type="text"
               placeholder="Título"
             />
+
             <div className="register__checkbox">
               <input id="zerolactose" type="checkbox" ref={zerolactoseRef} />
               <label htmlFor="zerolactose">Zero Lactose</label>
@@ -163,32 +152,73 @@ const Register = () => {
               <input id="zerosugar" type="checkbox" ref={zerosugarRef} />
               <label htmlFor="zerosugar">Zero Açúcar</label>
             </div>
+
             <textarea
               maxLength={500}
               ref={textRef}
               rows={5}
-              cols={50}
               placeholder="Texto do anúncio"
             />
-            <div className="price__input">
-              <input
-                onChange={togglePriceInput}
-                className="price__input__check"
-                type="checkbox"
-              />
-              <input
-                disabled={priceDisabled}
-                ref={priceRef}
-                type="text"
-                placeholder="Preço (R$)"
-                value={price}
-                onChange={handlePriceChange}
-              />
-            </div>
+
+            {/* Inputs de preço dinâmicos */}
+            {prices.map((p, idx) => (
+              <div key={idx} className="price__input">
+                <select
+                  value={p.size}
+                  onChange={(e) =>
+                    handlePriceChange(idx, "size", e.target.value)
+                  }
+                  required
+                >
+                  <option disabled value="">
+                    TAM
+                  </option>
+                  <option value="PP">PP</option>
+                  <option value="P">P</option>
+                  <option value="M">M</option>
+                  <option value="G">G</option>
+                  <option value="GG">GG</option>
+                  <option value="XG">XG</option>
+                </select>
+
+                <input
+                  type="text"
+                  placeholder="Preço (R$)"
+                  value={p.value.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
+                  onChange={(e) =>
+                    handlePriceChange(idx, "value", e.target.value)
+                  }
+                  required
+                />
+
+                {idx !== 0 && (
+                  <button
+                    className="remove__price__btn"
+                    type="button"
+                    onClick={() => removePrice(idx)}
+                  >
+                    -
+                  </button>
+                )}
+              </div>
+            ))}
+
+            <button
+              className="add__price__btn"
+              type="button"
+              onClick={addPrice}
+            >
+              + Adicionar preço
+            </button>
+
             <button type="submit" className="cad__btn">
               Cadastrar
             </button>
           </div>
+
           <div className="form__container-2">
             {selectedFiles.length > 0 && (
               <div className="preview__container">
@@ -199,9 +229,9 @@ const Register = () => {
                       alt={`Preview ${idx}`}
                     />
                     <button
+                      className="remove__file__btn"
                       type="button"
-                      className="remove__btn"
-                      onClick={() => handleRemove(idx)}
+                      onClick={() => handleRemoveFile(idx)}
                     >
                       ×
                     </button>

@@ -111,7 +111,17 @@ const Edit = () => {
                 </p>
                 <hr />
               </div>
-              <p className="price">{selectedProduct.price ?? "R$ -"}</p>
+              <p className="price">
+                A partir de{" "}
+                <span className="price__number">
+                  {Math.min(
+                    ...selectedProduct.price.map((p) => p.value)
+                  ).toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
+                </span>
+              </p>
 
               <div className="edit__card_btns">
                 <Link
@@ -165,7 +175,17 @@ const Edit = () => {
                     </p>
                   </div>
                   <hr />
-                  <p className="price">{product.price ?? "R$ -"}</p>
+                  <p className="price">
+                    A partir de{" "}
+                    <span className="price__number">
+                      {Math.min(
+                        ...product.price.map((p) => p.value)
+                      ).toLocaleString("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      })}
+                    </span>
+                  </p>
 
                   <div className="edit__card_btns">
                     <Link

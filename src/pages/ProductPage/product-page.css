@@ -84,6 +84,7 @@
   overflow: hidden;
   max-height: 10rem;
   white-space: pre-line;
+  margin-bottom: 1rem;
 }
 
 .read__more {
@@ -102,8 +103,23 @@
   text-align: center;
   font-size: 2rem;
   font-weight: 500;
-
   color: var(--terc-color);
+  position: relative;
+}
+
+.size__select {
+  position: absolute;
+  left: 0;
+  top: -0.65rem;
+  display: flex;
+  flex-direction: column;
+  background-color: inherit;
+  & label {
+    font-size: 0.8rem;
+  }
+  & * {
+    background-color: inherit;
+  }
 }
 
 .or__btn {

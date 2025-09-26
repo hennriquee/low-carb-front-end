@@ -15,6 +15,8 @@ const ProductPage = () => {
   const url = window.location.href;
   const textRef = useRef();
   const priceRef = useRef();
+  const selectSizeRef = useRef();
+  const [selectedSize, setSelectedSize] = useState();
 
   const [temMais, setTemMais] = useState(false);
   const [expandido, setExpandido] = useState(false);
@@ -36,6 +38,12 @@ const ProductPage = () => {
   useEffect(() => {
     getProduct();
   }, []);
+
+  useEffect(() => {
+    if (product?.price?.length > 0) {
+      setSelectedSize(product.price[0].size);
+    }
+  }, [product]);
 
   useEffect(() => {
     if (textRef.current) {
@@ -85,6 +93,9 @@ const ProductPage = () => {
   };
   // Funções de swipe de imagem
 
+  const handleSelectSize = () => {
+    setSelectedSize(selectSizeRef.current.value);
+  };
   return (
     <section className="product__page__main">
       <Toaster />
@@ -147,9 +158,34 @@ const ProductPage = () => {
           </p>
         )}
 
-        <p ref={priceRef} className="product__content__price">
-          {product?.price}
-        </p>
+        <div className="product__content__price">
+          <div className="size__select">
+            <label htmlFor="size">Tamanho:</label>
+
+            <select
+              name="size"
+              id="size"
+              ref={selectSizeRef}
+              onChange={handleSelectSize}
+            >
+              {product?.price?.map((p) => {
+                return (
+                  <option key={p.size} value={p.size}>
+                    {p.size}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          {selectedSize &&
+            product?.price
+              ?.find((p) => p.size === selectedSize)
+              ?.value.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              })}
+        </div>
+
         {product && (
           <div className="product__page__btns">
             <Link

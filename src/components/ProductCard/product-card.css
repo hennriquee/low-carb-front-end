@@ -31,8 +31,14 @@
 
 .price {
   margin: 0.2rem;
-  text-align: center;
+  text-align: start;
+  font-weight: 300;
+  font-size: 0.8rem;
+}
+
+.price__number {
   font-weight: 600;
+  font-size: 1.1rem;
 }
 
 .brown__btn {
@@ -85,4 +91,8 @@
 .green__text {
   font-weight: 500;
   color: rgb(1, 138, 1);
+}
+
+.a__partir__de__text {
+  font-weight: 400;
 }

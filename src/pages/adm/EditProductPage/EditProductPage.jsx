@@ -16,10 +16,21 @@ const EditProductPage = () => {
 
   const titleRef = useRef();
   const textRef = useRef();
-  const priceRef = useRef();
 
+  const [prices, setPrices] = useState([]);
+
+  // Carrega produto
   async function getProduct() {
-    setProduct((await api.get(`/produtos/${id}`)).data);
+    const res = await api.get(`/produtos/${id}`);
+    setProduct(res.data);
+
+    // garante que o price seja array de objetos { size, value } e value como número
+    const formattedPrices = (res.data.price || []).map((p) => ({
+      size: p.size,
+      value: Number(p.value) || 0,
+    }));
+
+    setPrices(formattedPrices);
     setIsLoading(false);
   }
 
@@ -27,12 +38,38 @@ const EditProductPage = () => {
     getProduct();
   }, [id]);
 
+  // Atualiza price
+  const handlePriceChange = (index, field, value) => {
+    setPrices((prev) =>
+      prev.map((p, i) =>
+        i === index
+          ? {
+              ...p,
+              [field]:
+                field === "value"
+                  ? Number(value.replace(/\D/g, "")) / 100 // armazena número
+                  : value,
+            }
+          : p
+      )
+    );
+  };
+
+  const addPrice = () => {
+    setPrices([...prices, { size: "", value: 0 }]);
+  };
+
+  const removePrice = (index) => {
+    setPrices(prices.filter((_, i) => i !== index));
+  };
+
+  // Salvar alterações
   async function handleEdit() {
     try {
       await api.put(`/produtos/${product.id}`, {
         title: titleRef.current.value,
         text: textRef.current.value,
-        price: priceRef.current.value,
+        price: prices,
       });
     } catch (err) {
       throw err.response?.data?.message || "Erro ao salvar.";
@@ -41,25 +78,19 @@ const EditProductPage = () => {
 
   const commitEdit = async (e) => {
     e.preventDefault();
-
     await toast.promise(handleEdit(), {
       loading: "Alterando...",
       success: <p>Alterações salvas!</p>,
       error: <p>Erro ao salvar.</p>,
     });
-
     navigate("/adm/edit");
   };
 
   const copyID = () => {
     navigator.clipboard
       .writeText(product?.id)
-      .then(() => {
-        toast.success("ID copiado!");
-      })
-      .catch((err) => {
-        toast.error("Erro ao copiar: ", err);
-      });
+      .then(() => toast.success("ID copiado!"))
+      .catch(() => toast.error("Erro ao copiar"));
   };
 
   return (
@@ -81,6 +112,7 @@ const EditProductPage = () => {
               maxLength={19}
             />
           </div>
+
           <div className="edit__input__box">
             <label htmlFor="text">Texto:</label>
             <textarea
@@ -92,16 +124,61 @@ const EditProductPage = () => {
               rows={5}
             />
           </div>
-          <div className="edit__input__box">
-            <label htmlFor="price">Preço:</label>
 
-            <input
-              name="price"
-              ref={priceRef}
-              defaultValue={product?.price}
-              disabled={isLoading}
-            />
+          <div className="edit__input__box prices__container">
+            <label>Preços:</label>
+            {prices.map((p, index) => (
+              <div key={index} className="price__row">
+                <select
+                  required
+                  value={p.size}
+                  onChange={(e) =>
+                    handlePriceChange(index, "size", e.target.value)
+                  }
+                  disabled={isLoading}
+                >
+                  <option value="">TAM</option>
+                  <option value="PP">PP</option>
+                  <option value="P">P</option>
+                  <option value="M">M</option>
+                  <option value="G">G</option>
+                  <option value="GG">GG</option>
+                  <option value="XG">XG</option>
+                </select>
+
+                <input
+                  type="text"
+                  placeholder="Preço (R$)"
+                  value={
+                    p.value
+                      ? new Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(p.value)
+                      : ""
+                  }
+                  onChange={(e) =>
+                    handlePriceChange(index, "value", e.target.value)
+                  }
+                  disabled={isLoading}
+                  required
+                />
+
+                <button
+                  type="button"
+                  onClick={() => removePrice(index)}
+                  disabled={isLoading}
+                >
+                  Remover
+                </button>
+              </div>
+            ))}
+
+            <button type="button" onClick={addPrice} disabled={isLoading}>
+              + Adicionar preço
+            </button>
           </div>
+
           <div className="edit__container__btns">
             <Link className="edit__container__btn cancel__btn" to={"/adm/edit"}>
               Cancelar
