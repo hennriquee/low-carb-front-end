@@ -159,24 +159,26 @@ const ProductPage = () => {
         )}
 
         <div className="product__content__price">
-          <div className="size__select">
-            <label htmlFor="size">Tamanho:</label>
+          {product && (
+            <div className="size__select">
+              <label htmlFor="size">Tamanho:</label>
 
-            <select
-              name="size"
-              id="size"
-              ref={selectSizeRef}
-              onChange={handleSelectSize}
-            >
-              {product?.price?.map((p) => {
-                return (
-                  <option key={p.size} value={p.size}>
-                    {p.size}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
+              <select
+                name="size"
+                id="size"
+                ref={selectSizeRef}
+                onChange={handleSelectSize}
+              >
+                {product?.price?.map((p) => {
+                  return (
+                    <option key={p.size} value={p.size}>
+                      {p.size}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          )}
           {selectedSize &&
             product?.price
               ?.find((p) => p.size === selectedSize)

@@ -41,7 +41,7 @@ const ProductCard = ({
         </div>
         <hr />
         <p className="price">
-          A partir de{" "}
+          A partir de:{" "}
           <span className="price__number">
             {Math.min(...price.map((p) => p.value)).toLocaleString("pt-BR", {
               style: "currency",
